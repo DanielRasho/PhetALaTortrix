@@ -29,7 +29,7 @@ This generates a pkg directory inside the `backend` directory. This folder repre
 
 ### Running the Frontend
 
-For testing and developing of the app frontend, run this command within `/project` folder.
+For testing and developing of the app frontend, run this command within `/frontend` folder.
 
 ```bash
 yarn run dev
