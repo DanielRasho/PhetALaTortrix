@@ -47,8 +47,24 @@ pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64) -> f64 {
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
-pub fn hemisphere_field_on(hemisphere: Hemisphere, x: f64) -> f64 {
-    todo!()
+/// `parts` is the amount of precision the user desires to have over the value of the field.
+pub fn hemisphere_field_on(hemisphere: Hemisphere, x: f64, parts: i64) -> f64 {
+    let Hemisphere { radius, charge } = hemisphere;
+    let factor = 3.0 * charge / (8.0 * std::f64::consts::PI * EPSILON_0);
+    let d_x = radius / parts as f64;
+    let R2 = radius.powi(2);
+    let d2 = x.powi(2);
+
+    let sum: f64 = (1..=parts)
+        .map(|i| {
+            let x_i = radius / parts as f64 * i as f64;
+            let r3 = (R2 - x_i.powi(2)).powf(3.0 / 2.0);
+            let square_term = d2 / (d2 + R2 - x_i.powi(2)).powf(0.5);
+            d_x * (1.0 / r3) * (1.0 - square_term)
+        })
+        .sum();
+
+    sum * factor
 }
 
 /// Calculates the field value at `x`.
@@ -75,12 +91,18 @@ pub fn js_cone_trunk_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, Js
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
+/// `parts` is the amount of precision the user desires to have over the value of the field.
 #[wasm_bindgen]
-pub fn js_hemisphere_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, JsValue> {
+pub fn js_hemisphere_field_on(
+    figure: JsValue,
+    x: JsValue,
+    parts: JsValue,
+) -> Result<JsValue, JsValue> {
     let hemisphere = serde_wasm_bindgen::from_value(figure)?;
     let x = serde_wasm_bindgen::from_value(x)?;
+    let parts = serde_wasm_bindgen::from_value(parts)?;
 
-    let field = hemisphere_field_on(hemisphere, x);
+    let field = hemisphere_field_on(hemisphere, x, parts);
     Ok(serde_wasm_bindgen::to_value(&field)?)
 }
 
@@ -141,11 +163,12 @@ mod tests {
 
         let point = 2.5;
 
-        let output = hemisphere_field_on(hemisphere, point);
+        let output = hemisphere_field_on(hemisphere, point, 500);
         let difference = (output - CORRECT_FIELD).abs();
         // Has at least 5 decimal points of precision...
         println!("Output: {}", output);
         println!("Correct: {}", CORRECT_FIELD);
         println!("Difference: {}", difference);
         assert!(difference <= 1e-5);
+    }
 }
