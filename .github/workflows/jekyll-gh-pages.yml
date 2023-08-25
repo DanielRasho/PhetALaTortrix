@@ -1,6 +1,7 @@
 defaults:
   run:
-    working-directory: frontend
+    shell: bash
+    working-directory: ./frontend
 
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
