@@ -1,5 +1,6 @@
 <script setup>
 import buttonImportant from './components/molecules/buttonImportant.vue'
+import numberField from './components/molecules/numberField.vue'
 import { ref } from 'vue'
 
 const figures = ref([
@@ -19,32 +20,37 @@ const figures = ref([
 </script>
 
 <template>
-    <header>Phet a la Tortrix</header>
-
     <div class="figures-bar">
         <buttonImportant
             class="figures-btn"
             v-for="figure in figures"
-            :key="figure.name">
+            :key="figure.name"
+            @click.prevent="console.log(figure.name)"
+        >
             <div class="figures-btn-content">
                 <img :src="figure.img" alt="circle" />
                 <span>{{ figure.name }}</span>
             </div>
         </buttonImportant>
     </div>
+
+    <div class="canvas">a</div>
+
+    <div class="params-box">
+        <div class="common-box">
+            <h3>Common</h3>
+            <numberField placeholder="- - -" />
+        </div>
+        <div class="specific-box">a</div>
+        <div class="submit-box">a</div>
+    </div>
 </template>
 
 <style scoped>
-header {
-    font-size: 2rem;
-    width: 100%;
-    text-align: center;
-    padding: 1ch;
-}
-
 .figures-bar {
     width: fit-content;
     margin: auto;
+    margin-top: 3vh;
     display: flex;
     align-items: center;
 }
@@ -69,5 +75,35 @@ header {
 
 .figures-btn-content span {
     font-size: 1rem;
+}
+
+.canvas {
+    width: 80%;
+    height: 40vh;
+    background-color: white;
+    margin: 2rem auto;
+}
+.params-box {
+    width: 100%;
+    min-height: 25vh;
+    display: flex;
+    justify-content: space-around;
+}
+
+.params-box > div {
+    height: inherit;
+    padding: 0 3ch;
+}
+
+.params-box > .common-box {
+    border-right: 5px dashed brown;
+    width: 25%;
+}
+.params-box > .specific-box {
+    width: 50%;
+}
+.params-box > .submit-box {
+    border-left: 5px dashed brown;
+    width: 25%;
 }
 </style>
