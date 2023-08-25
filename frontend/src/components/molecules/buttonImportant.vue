@@ -21,7 +21,7 @@ export default {
 </script>
 
 <style scoped>
-@import '../../assets/colors';
+@import '../../assets/colors.css';
 
 .front {
     display: block;
