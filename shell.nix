@@ -14,8 +14,12 @@ in
       # (nixpkgs.rustChannelOf { rustToolchain = ./rust-toolchain; }).rust
       openssl
       pkg-config
+	  wasm-pack
       exa
       fd
+	  nodejs
+	  yarn
+	  binaryen
     ];
     shellHook = ''
       export RUST_BACKTRACE=1
