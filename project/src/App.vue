@@ -1,85 +1,73 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import buttonImportant from './components/molecules/buttonImportant.vue'
+import { ref } from 'vue'
+
+const figures = ref([
+    {
+        name: 'cone',
+        img: 'circle.png'
+    },
+    {
+        name: 'truncated cone',
+        img: 'circle.png'
+    },
+    {
+        name: 'semiesphere',
+        img: 'circle.png'
+    }
+])
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <header>Phet a la Tortrix</header>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+    <div class="figures-bar">
+        <buttonImportant
+            class="figures-btn"
+            v-for="figure in figures"
+            :key="figure.name">
+            <div class="figures-btn-content">
+                <img :src="figure.img" alt="circle" />
+                <span>{{ figure.name }}</span>
+            </div>
+        </buttonImportant>
     </div>
-  </header>
-
-  <RouterView />
 </template>
 
 <style scoped>
 header {
-  line-height: 1.5;
-  max-height: 100vh;
+    font-size: 2rem;
+    width: 100%;
+    text-align: center;
+    padding: 1ch;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
+.figures-bar {
+    width: fit-content;
+    margin: auto;
     display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+    align-items: center;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.figures-btn {
+    margin: 0 2ch;
+}
 
-  header .wrapper {
+.figures-btn-content {
+    width: 8rem;
+    margin: 0 2ch;
+    overflow: hidden;
     display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+    flex-direction: column;
+    align-items: center;
+    border-radius: 1rem;
+    background-color: var(--primary-button);
+}
+.figures-btn-content img {
+    width: 70%;
+}
 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
+.figures-btn-content span {
     font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
 </style>
