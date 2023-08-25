@@ -16,25 +16,18 @@ This command will read the nix file and setup everything that you'll need to dev
 
 The first time you execute the command it may take a while because it needs to install node and rust.
 
-### Compiling the Chess Engine
+### Compiling the Backend
 
-Run the following commands to compile the Chess Engine written in rust:
-
-```bash
-cd chess_engine
-cargo build --lib
-```
-
-You can also compile the Chess Engine to be used on web assembly by running:
+Run the following command to compile the backend:
 
 ```bash
 cd chess_engine
 wasm-pack build --target web
 ```
 
-This generates a pkg directory inside the `chess_engine` directory. This folder represents the module to be used inside the javascript client. [For more information you can watch this video](https://www.youtube.com/watch?v=nW71Mlbmxt8)
+This generates a pkg directory inside the `backend` directory. This folder represents the module to be used inside the javascript client. [For more information you can watch this video](https://www.youtube.com/watch?v=nW71Mlbmxt8)
 
-### Compiling the Chess Frontend
+### Running the Frontend
 
 For testing and developing of the app frontend, run this command within `/project` folder.
 
