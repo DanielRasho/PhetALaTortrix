@@ -25,7 +25,7 @@ export default {
 
 .front {
     display: block;
-    padding: 1ch 2ch;
+    padding: 1ch 1ch;
     border-radius: 12px;
     background-color: var(--primary-button);
     color: var(--text);
@@ -35,6 +35,7 @@ export default {
     will-change: transform;
     transition: transform 250ms;
 }
+
 .pushable {
     position: relative;
     background: transparent;
