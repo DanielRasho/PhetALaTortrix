@@ -41,8 +41,34 @@ pub fn cone_field_on(cone: Cone, x: f64) -> f64 {
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the cone.
-pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64) -> f64 {
-    todo!()
+pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64, parts: i64) -> f64 {
+    let ConeTrunk {
+        left_radius,
+        right_radius,
+        length,
+        charge,
+    } = cone_trunk;
+    let R2_2 = right_radius.powi(2);
+    let R2_1 = left_radius.powi(2);
+    let deltaR = left_radius - right_radius;
+
+    let factor = 3.0 * charge
+        / (2.0
+            * length
+            * std::f64::consts::PI
+            * EPSILON_0
+            * deltaR
+            * (R2_2 + R2_1 + left_radius * right_radius));
+
+    let dx = length / parts as f64;
+    let sum: f64 = (1..=parts).map(|i| {
+        let x_i = dx * i as f64;
+        let numerator = x + length - x_i;
+        let denominator_right = (deltaR)/length * x_i;
+        numerator / (numerator.powi(2)+ denominator_right.powi(2)).sqrt()
+    }).sum();
+
+    factor * (length - dx * sum)
 }
 
 /// Calculates the field value at `x`.
@@ -80,18 +106,20 @@ pub fn js_cone_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, JsValue>
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the cone trunk.
+/// `parts` Represents the quantity of terms used in the Reinman sum to approximate the field.
 #[wasm_bindgen]
-pub fn js_cone_trunk_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, JsValue> {
+pub fn js_cone_trunk_field_on(figure: JsValue, x: JsValue, parts: JsValue) -> Result<JsValue, JsValue> {
     let trunk = serde_wasm_bindgen::from_value(figure)?;
     let x = serde_wasm_bindgen::from_value(x)?;
+    let parts = serde_wasm_bindgen::from_value(parts)?;
 
-    let field = cone_trunk_field_on(trunk, x);
+    let field = cone_trunk_field_on(trunk, x, parts);
     Ok(serde_wasm_bindgen::to_value(&field)?)
 }
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
-/// `parts` is the amount of precision the user desires to have over the value of the field.
+/// `parts` Represents the quantity of terms used in the Reinman sum to approximate the field.
 #[wasm_bindgen]
 pub fn js_hemisphere_field_on(
     figure: JsValue,
