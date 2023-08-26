@@ -1,6 +1,7 @@
 <script setup>
 import buttonImportant from './components/molecules/buttonImportant.vue'
 import numberField from './components/molecules/numberField.vue'
+import fieldSection from './components/organism/fieldSection.vue';
 import { ref } from 'vue'
 
 const figures = ref([
@@ -39,12 +40,17 @@ const figures = ref([
     </div>
 
     <div class="params-box">
-        <div class="common-box">
-            <h3>Common</h3>
+        <fieldSection title="Este es un titulo" class="common-box">
             <numberField name="Carga" placeholder="- - -" unit="nC" />
-        </div>
-        <div class="specific-box">a</div>
-        <div class="submit-box">a</div>
+        </fieldSection>
+        <fieldSection title="Este es un titulo" class="specific-box">
+            <numberField name="Carga" placeholder="- - -" unit="nC" />
+        </fieldSection>
+        <fieldSection title="Este es un titulo" class="submit-box">
+        <buttonImportant>
+            ara ara
+        </buttonImportant>
+        </fieldSection>
     </div>
 </template>
 
