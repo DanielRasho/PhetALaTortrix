@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <span>{{ this.name }}</span>
+    <div class="field-container">
+        <span class="title">{{ this.name }}</span>
         <input
             @input="updateValue"
             type="text"
@@ -64,17 +64,28 @@ export default {
 </script>
 
 <style scoped>
+
+.field-container{
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 1.2rem;
+    margin-right: 2ch;
+}
+
 input,
 .unit {
     display: inline-block;
-    height: 2rem;
-    padding: 2ch 2ch;
+    border: 2px solid #ccc;
+    height: 2.5rem;
+    padding: 1ch 1ch;
     font-family: 'PT Sans', sans-serif;
     font-size: 1rem;
 }
 
 input {
-    border: 2px solid #ccc;
     border-right: 0;
     width: 20ch;
     color: #666;
@@ -86,6 +97,8 @@ input::placeholder {
 
 .unit {
     background-color: #ccc;
+    color: var(--background);
     border-radius: 0px 7px 7px 0px;
+    font-weight: bold;
 }
 </style>
