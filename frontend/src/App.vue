@@ -5,41 +5,43 @@ import { ref } from 'vue'
 
 const figures = ref([
     {
-        name: 'cone',
+        name: 'Cone',
         img: 'circle.png'
     },
     {
-        name: 'truncated cone',
+        name: 'Truncated Cone',
         img: 'circle.png'
     },
     {
-        name: 'semiesphere',
+        name: 'Semiesphere',
         img: 'circle.png'
     }
 ])
 </script>
 
 <template>
-    <div class="figures-bar">
-        <buttonImportant
-            class="figures-btn"
-            v-for="figure in figures"
-            :key="figure.name"
-            @click.prevent="console.log(figure.name)"
-        >
-            <div class="figures-btn-content">
-                <img :src="figure.img" alt="circle" />
-                <span>{{ figure.name }}</span>
-            </div>
-        </buttonImportant>
-    </div>
+    <div class="figure-display">
+        <div class="figures-bar">
+            <buttonImportant
+                class="figures-btn"
+                v-for="figure in figures"
+                :key="figure.name"
+                @click.prevent="console.log(figure.name)"
+            >
+                <div class="figures-btn-content">
+                    <img :src="figure.img" alt="circle" />
+                    <span>{{ figure.name }}</span>
+                </div>
+            </buttonImportant>
+        </div>
 
-    <div class="canvas">a</div>
+        <div class="canvas">a</div>
+    </div>
 
     <div class="params-box">
         <div class="common-box">
             <h3>Common</h3>
-            <numberField placeholder="- - -" />
+            <numberField name="Carga" placeholder="- - -" unit="nC" />
         </div>
         <div class="specific-box">a</div>
         <div class="submit-box">a</div>
@@ -47,21 +49,27 @@ const figures = ref([
 </template>
 
 <style scoped>
+
+.figure-display{
+   display: flex; 
+   padding-top: 3vh;
+   padding: 3ch 3ch 3ch;
+}
 .figures-bar {
     width: fit-content;
-    margin: auto;
-    margin-top: 3vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
+    margin-right: 3ch;
 }
 
 .figures-btn {
-    margin: 0 2ch;
+    margin: 1.5ch 0;
 }
 
 .figures-btn-content {
-    width: 8rem;
-    margin: 0 2ch;
+    max-width: 9rem;
+    margin: 0 1ch;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -74,14 +82,15 @@ const figures = ref([
 }
 
 .figures-btn-content span {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    color: var(--background);
+    font-weight: 700;
 }
 
 .canvas {
-    width: 80%;
-    height: 40vh;
-    background-color: white;
-    margin: 2rem auto;
+    flex-grow: 1;
+    background-color: rgb(207, 207, 207);
+    border-radius: 7px;
 }
 .params-box {
     width: 100%;
@@ -96,14 +105,14 @@ const figures = ref([
 }
 
 .params-box > .common-box {
-    border-right: 5px dashed brown;
+    border-right: 1px solid #ccc;
     width: 25%;
 }
 .params-box > .specific-box {
     width: 50%;
 }
 .params-box > .submit-box {
-    border-left: 5px dashed brown;
+    border-left: 1px solid #ccc;
     width: 25%;
 }
 </style>
