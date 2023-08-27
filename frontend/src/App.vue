@@ -5,6 +5,7 @@ import { useRouter, RouterView } from 'vue-router'
 import { ref } from 'vue'
 
 const router = useRouter()
+const BASE = "/PhetALaTortrix"
 const figures = ref([
     {
         name: 'Cone',
@@ -24,7 +25,7 @@ const figures = ref([
 ])
 
 function changeFormView(viewPath) {
-    router.replace({ name: viewPath })
+    router.push({ name: viewPath })
 }
 </script>
 

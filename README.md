@@ -11,6 +11,9 @@ Made with [VueJS](https://vuejs.org/) and [Rust](https://www.rust-lang.org/)
 
 🔴 **Live View:** [***Here***](https://danielrasho.github.io/PhetALaTortrix/)
 
+🔴 **Known Bugs:** 
+- Crash when reloading the page.
+
 ## Compiling the project
 
 All developer dependencies are defined on the shell.nix file. To use this file just install Nix and then proceed with the command:
