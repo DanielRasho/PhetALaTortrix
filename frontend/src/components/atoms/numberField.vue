@@ -2,7 +2,7 @@
     <div class="field-container">
         <span class="title">{{ this.name }}</span>
         <input
-            @input="updateValue"
+            @blur="updateValue"
             type="text"
             :placeholder="this.placeholder"
             :value="currentValue"
@@ -11,16 +11,17 @@
     </div>
 </template>
 
-<script>
-/**
- * Representation of a form's field. Code to works with v-model
- */
-export default {
-    props: {
+<script setup>
+import { onMounted, ref } from 'vue';
+
+const currentValue = ref(null)
+
+const emit = defineEmits(['fieldUpdated'])
+
+const props = defineProps({
         /**
          * Required for v-model behaviour.
          */
-        modelValue: {},
         name: {
             required: true,
             type: String,
@@ -49,39 +50,24 @@ export default {
             type: String,
             default: '20ch'
         }
-    },
+})
 
-    emits: ['update:modelValue'],
-    mounted() {
-        this.currentValue = this.initialValue;
-    },
+onMounted(() => {
+    currentValue.value = props.initialValue
+})
 
-    data() {
-        return {
-            currentValue: null
-        }
-    },
-    methods: {
-        /**
-         * Call when the input's value is modify.
-         * @param {event} event Action of changing INPUT's value.
-         */
-        updateValue(event) {
-            let futureValue = parseFloat(event.target.value)
-            console.log(event.target.value)
-            console.log(futureValue)
-            if(isNaN(futureValue)){
-                console.log("ara" + this.initialValue)
-                this.currentValue = this.initialValue
-            } else{
-                
-                this.currentValue = futureValue
-            }
-            // Emit the value to parent
-            this.$emit('update:modelValue', this.currentValue)
-        }
+function updateValue(event){
+    let futureValue = event.target.value;
+    if(futureValue == '' || futureValue == '-'){
+        // Force value update
+        currentValue.value = parseFloat(currentValue.value + 1);
+        currentValue.value = parseFloat(currentValue.value - 1) ;
+    }else{
+        currentValue.value = parseFloat(futureValue)
+        emit("fieldUpdated", currentValue.value)
     }
 }
+
 </script>
 
 <style scoped>

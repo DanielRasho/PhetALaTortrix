@@ -8,6 +8,9 @@
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
+                    :initialValue="fields.axis.x[0]"
+                    @field-updated="fields.axis.x[0] = $event"
+                    
                 />
                 <numberField
                     name="Max"
@@ -82,6 +85,7 @@ const fields = ref({
     },
     points: []
 })
+
 </script>
 
 <style scoped>
@@ -127,7 +131,7 @@ h4 {
 .submit-btn,
 .clear-btn {
     display: block;
-    margin: 3rem auto;
+    margin: 2rem auto 0;
 }
 
 .submit-btn :deep(.front) {
