@@ -9,15 +9,15 @@
                     unit="m"
                     width="7ch"
                     :initialValue="fields.axis.x[0]"
-                    @field-updated="modifyField(fields.axis.x[0], $event)"
+                    @field-updated="fields.axis.x[0] = $event"
                 />
                 <numberField
                     name="Max"
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.x[0]"
-                    @field-updated="modifyField(fields.axis.x[1], $event)"
+                    :initialValue="fields.axis.x[1]"
+                    @field-updated="fields.axis.x[1] = $event"
                 />
             </div>
             <h4>Y axis</h4>
@@ -27,16 +27,16 @@
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.x[1]"
-                    @field-updated="modifyField(fields.axis.x[0], $event)"
+                    :initialValue="fields.axis.y[0]"
+                    @field-updated="fields.axis.y[0] = $event"
                 />
                 <numberField
                     name="Max"
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.x[1]"
-                    @field-updated="modifyField(fields.axis.x[0], $event)"
+                    :initialValue="fields.axis.y[1]"
+                    @field-updated="fields.axis.y[1] = $event"
                 />
             </div>
         </fieldSection>

@@ -58,7 +58,7 @@ onMounted(() => {
 
 function updateValue(event){
     let futureValue = event.target.value;
-    if(futureValue == '' || futureValue == '-'){
+    if(futureValue == '' || futureValue == '-' || isNaN(parseFloat(futureValue))){
         // Force value update
         currentValue.value = parseFloat(currentValue.value + 1);
         currentValue.value = parseFloat(currentValue.value - 1) ;
