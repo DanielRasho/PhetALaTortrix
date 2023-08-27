@@ -1,6 +1,6 @@
 /**
  * Draws a plane according to the given parameters.
- * @param {Object} two The renderer of the TwoJS
+ * @param {Two} two The renderer of the TwoJS
  * @param {Number} columns The number of columns in the graph
  * @param {Number} rows The number of rows in the graph
  * @param {String} guideLinesColor The color of the lines in the background
