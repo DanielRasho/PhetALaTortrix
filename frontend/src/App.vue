@@ -1,76 +1,75 @@
 <script setup>
-import buttonImportant from './components/molecules/buttonImportant.vue'
-import numberField from './components/molecules/numberField.vue'
-import fieldSection from './components/organism/fieldSection.vue';
+import buttonImportant from '@/components/atoms/buttonImportant.vue'
+import { useRouter, RouterView } from 'vue-router'
+
 import { ref } from 'vue'
 
+const router = useRouter()
 const figures = ref([
     {
         name: 'Cone',
-        img: 'circle.png'
+        img: 'circle.png',
+        view: 'Cone'
     },
     {
         name: 'Truncated Cone',
-        img: 'circle.png'
+        img: 'circle.png',
+        view: 'ConeTrunk'
     },
     {
-        name: 'Semiesphere',
-        img: 'circle.png'
+        name: 'Hemisphere',
+        img: 'circle.png',
+        view: 'Hemisphere'
     }
 ])
+
+function changeFormView(viewPath) {
+    router.replace({ name: viewPath })
+}
 </script>
 
 <template>
-    <div class="figure-display">
-        <div class="figures-bar">
+    <div class="app">
+        <nav class="figures-bar">
             <buttonImportant
                 class="figures-btn"
                 v-for="figure in figures"
                 :key="figure.name"
-                @click.prevent="console.log(figure.name)"
+                @click.prevent="changeFormView(figure.view)"
             >
                 <div class="figures-btn-content">
                     <img :src="figure.img" alt="circle" />
                     <span>{{ figure.name }}</span>
                 </div>
             </buttonImportant>
-        </div>
-
-        <div class="canvas">a</div>
-    </div>
-
-    <div class="params-box">
-        <fieldSection title="Este es un titulo" class="common-box">
-            <numberField name="Carga" placeholder="- - -" unit="nC" />
-        </fieldSection>
-        <fieldSection title="Este es un titulo" class="specific-box">
-            <numberField name="Carga" placeholder="- - -" unit="nC" />
-        </fieldSection>
-        <fieldSection title="Este es un titulo" class="submit-box">
-        <buttonImportant>
-            ara ara
-        </buttonImportant>
-        </fieldSection>
+        </nav>
+        <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
+                <component :is="Component" />
+            </transition>
+        </router-view>
     </div>
 </template>
 
 <style scoped>
-
-.figure-display{
-   display: flex; 
-   padding-top: 3vh;
-   padding: 3ch 3ch 3ch;
+.app {
+    display: flex;
 }
+
 .figures-bar {
-    width: fit-content;
+    width: 250px;
+    height: 100vh;
+    flex-shrink: 0;
+
+    padding: 0 3ch;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 3ch;
+    justify-content: center;
 }
 
 .figures-btn {
-    margin: 1.5ch 0;
+    margin: 2ch 0;
 }
 
 .figures-btn-content {
@@ -93,32 +92,13 @@ const figures = ref([
     font-weight: 700;
 }
 
-.canvas {
-    flex-grow: 1;
-    background-color: rgb(207, 207, 207);
-    border-radius: 7px;
-}
-.params-box {
-    width: 100%;
-    min-height: 25vh;
-    display: flex;
-    justify-content: space-around;
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 
-.params-box > div {
-    height: inherit;
-    padding: 0 3ch;
-}
-
-.params-box > .common-box {
-    border-right: 1px solid #ccc;
-    width: 25%;
-}
-.params-box > .specific-box {
-    width: 50%;
-}
-.params-box > .submit-box {
-    border-left: 1px solid #ccc;
-    width: 25%;
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s ease-out;
 }
 </style>

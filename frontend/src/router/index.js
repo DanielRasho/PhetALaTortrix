@@ -1,11 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Cone from '../views/Cone.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        { path: "/", component: import('../views/Cone.vue')},
-        { path: "/trunk", component: () => import('../views/ConeTrunk.vue')},
-        { path: "/hemisphere", component: () => import('../views/Hemisphere.vue')},
+        { path: '/', name: 'Cone', component: Cone },
+        {
+            path: '/trunk',
+            name: 'ConeTrunk',
+            component: () => import('../views/ConeTrunk.vue')
+        },
+        {
+            path: '/hemisphere',
+            name: 'Hemisphere',
+            component: () => import('../views/Hemisphere.vue')
+        }
     ]
 })
 
