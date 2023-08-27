@@ -49,6 +49,11 @@ const props = defineProps({
             required: false,
             type: String,
             default: '20ch'
+        },
+        titleWidth: {
+            required: false,
+            type: String,
+            default: 'auto'
         }
 })
 
@@ -78,7 +83,7 @@ function updateValue(event){
 
 .title {
     font-size: 1.2rem;
-    min-width: 4ch;
+    min-width: v-bind(titleWidth);
     margin-right: 2ch;
 }
 

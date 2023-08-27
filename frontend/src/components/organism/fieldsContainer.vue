@@ -42,15 +42,21 @@
         </fieldSection>
 
         <fieldSection title="Figure" class="specific-box">
-            <numberField name="Charge" placeholder="- - -" unit="nC" />
-            <numberField name="Height" placeholder="- - -" unit="m" />
-            <numberField name="Radius" placeholder="- - -" unit="m" />
+        <div class="wrapper-container">
+            <numberField v-for="field in fields.figure" :key="field.name"
+            class="specific-field"
+            :name="field.name"
+            :unit="field.unit"
+            :titleWidth="calculateFieldNameWidth(fields)"
+            :initialValue="field.value"
+            @field-updated="field.value = $event"
+            />
+        </div>
         </fieldSection>
 
         <fieldSection title="Point" class="submit-box">
             <numberField
                 name="Position"
-                placeholder="- - -"
                 unit="m"
                 width="10ch"
             />
@@ -73,7 +79,7 @@
 import buttonImportant from '@/components/atoms/buttonImportant.vue'
 import numberField from '@/components/atoms/numberField.vue'
 import fieldSection from '@/components/molecules/fieldSection.vue'
-import { ref } from 'vue'
+import { onMounted,  ref } from 'vue'
 
 const fields = ref({
     axis: {
@@ -82,17 +88,32 @@ const fields = ref({
     },
     figure: {
         radius: {
-            value: 32,
+            value: 1,
             name: 'Radius',
             unit: 'm'
         },
-        Charge: 34
+        heigh: {
+            value: 1,
+            name: 'Height',
+            unit: 'm'
+        },
+        charge: {
+            value: 1,
+            name: 'Charge',
+            unit: 'nC'
+        },
     },
     points: []
 })
 
-function modifyField(field, value){
-    field = value;
+function calculateFieldNameWidth(names){
+    let maxLen = 0;
+    for (let [key, proxy] of Object.entries(names.figure)) {
+        let proxyLen = proxy.name.length
+        if(proxyLen > maxLen)
+            maxLen = proxyLen
+    }
+    return maxLen + 'ch';
 }
 
 </script>
@@ -125,11 +146,15 @@ h4 {
     padding-left: 2ch;
 }
 
+.specific-field{
+    margin-top: 2ch;
+}
 .wrapper-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 
 .wrapper-container-center {
     display: flex;
