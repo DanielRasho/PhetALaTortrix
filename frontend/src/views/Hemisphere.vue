@@ -1,13 +1,31 @@
 <template>
     <main>
-        <simulatorSection></simulatorSection>
-    </main>
+        <canvas></canvas>
+        <fieldsContainer></fieldsContainer>
+        </main>
 </template>
 
 <script setup>
-import simulatorSection from '@/components/organism/simulatorSection.vue'
-</script>
+import fieldsContainer from '@/components/organism/fieldsContainer.vue'
+import { ref } from 'vue';
 
+const fields = ref({
+    axis:{
+        x:[-5, 5],
+        y:[-5, 5]
+    },
+    figure:{
+        radius:{
+            value: 32,
+            name: "Radius",
+            unit: "m"
+        },
+        Charge:34
+    },
+    points:[]
+})
+
+</script>
 <style scoped>
 main {
     flex-grow: 1;

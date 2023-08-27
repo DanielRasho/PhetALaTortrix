@@ -1,7 +1,5 @@
 <template>
     <div class="container">
-        <div class="canvas">a</div>
-
         <div class="params-box">
             <fieldSection title="Este es un titulo" class="common-box">
                 <numberField name="Carga" placeholder="- - -" unit="nC" />
@@ -23,13 +21,6 @@ import fieldSection from '@/components/molecules/fieldSection.vue'
 </script>
 
 <style scoped>
-.canvas {
-    display: block;
-    background-color: rgb(207, 207, 207);
-    border-radius: 7px;
-    min-height: 55vh;
-    margin-bottom: 3ch;
-}
 .params-box {
     width: 100%;
     min-height: 25vh;
