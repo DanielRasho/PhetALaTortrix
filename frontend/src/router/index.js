@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Empty from '../views/Empty.vue'
 
-const BASE = "/PhetALaTortrix"
+const BASE = '/PhetALaTortrix'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,7 +12,7 @@ const router = createRouter({
         },
         {
             path: '/empty',
-            name: "Empty",
+            name: 'Empty',
             component: Empty
         },
         {

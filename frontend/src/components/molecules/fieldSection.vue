@@ -17,9 +17,10 @@ const props = defineProps({
 
 <style scoped>
 h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: bold;
     text-align: center;
-    margin-bottom: 1ch;
-
+    color: #b1b1b1;
 }
 </style>

@@ -11,6 +11,7 @@ import fieldsContainer from '@/components/organism/fieldsContainer.vue'
 
 <style scoped>
 main {
+    grid-area: 'main';
     flex-grow: 1;
     padding: 3ch;
 }

@@ -1,7 +1,7 @@
 <template>
     <main>
-        <div class="canvas" id="canvas"></div>
-        <fieldsContainer :params="fields" @hot-reload="hotReloading()"></fieldsContainer>
+        <div class="canvas"></div>
+        <fieldsContainer></fieldsContainer>
     </main>
 </template>
 
@@ -89,6 +89,7 @@ onMounted(() => {
 </script>
 <style scoped>
 main {
+    grid-area: 'main';
     flex-grow: 1;
     padding: 3ch;
 }

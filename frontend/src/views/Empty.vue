@@ -4,17 +4,18 @@
     </main>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style scoped>
 @import '../assets/colors.css';
 
 main {
+    grid-area: 'main';
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
 
 h1 {

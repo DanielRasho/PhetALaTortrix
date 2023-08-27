@@ -11,7 +11,7 @@ import fieldsContainer from '@/components/organism/fieldsContainer.vue'
 
 <style scoped>
 main {
-    flex-grow: 1;
+    grid-area: 'main';
     padding: 3ch;
 }
 .canvas {
@@ -19,6 +19,6 @@ main {
     background-color: rgb(207, 207, 207);
     border-radius: 7px;
     min-height: 55vh;
-    margin-bottom: 3ch;
+    margin-bottom: 1ch;
 }
 </style>

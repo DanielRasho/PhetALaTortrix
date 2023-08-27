@@ -30,6 +30,9 @@ function changeFormView(viewPath) {
 
 <template>
     <div class="app">
+        <!-- DUMMY DIV -->
+        <div></div>
+        <!-- SIDE BAR -->
         <nav class="figures-bar">
             <buttonImportant
                 class="figures-btn"
@@ -43,6 +46,7 @@ function changeFormView(viewPath) {
                 </div>
             </buttonImportant>
         </nav>
+        <!-- MAIN CONTENT -->
         <router-view v-slot="{ Component }">
             <transition name="fade" mode="out-in">
                 <component :is="Component" />
@@ -53,15 +57,18 @@ function changeFormView(viewPath) {
 
 <style scoped>
 .app {
-    display: flex;
+    display: grid;
+    grid-template-areas: 'sidebar main';
+    grid-template-columns: 250px;
+    grid-auto-columns: 1fr;
 }
 
 .figures-bar {
-    width: 250px;
-    height: 100vh;
-    flex-shrink: 0;
+    position: fixed;
 
+    height: 100vh;
     padding: 0 3ch;
+
     display: flex;
     flex-direction: column;
     align-items: center;

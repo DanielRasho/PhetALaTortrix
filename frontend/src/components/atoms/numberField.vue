@@ -5,6 +5,7 @@
             @input="updateValue"
             type="text"
             :placeholder="this.placeholder"
+            :value="currentValue"
         />
         <span class="unit">{{ this.unit }}</span>
     </div>
@@ -26,6 +27,10 @@ export default {
             default: 'Title'
         },
 
+        initialValue: {
+            required: true,
+        },
+
         unit: {
             required: true,
             type: String,
@@ -37,11 +42,19 @@ export default {
         placeholder: {
             required: false,
             type: String,
-            default: 'Insert a value'
+            default: '- - -'
+        },
+        width: {
+            required: false,
+            type: String,
+            default: '20ch'
         }
     },
 
     emits: ['update:modelValue'],
+    mounted() {
+        this.currentValue = this.initialValue;
+    },
 
     data() {
         return {
@@ -54,8 +67,16 @@ export default {
          * @param {event} event Action of changing INPUT's value.
          */
         updateValue(event) {
-            // Update value
-            this.currentValue = event.target.value
+            let futureValue = parseFloat(event.target.value)
+            console.log(event.target.value)
+            console.log(futureValue)
+            if(isNaN(futureValue)){
+                console.log("ara" + this.initialValue)
+                this.currentValue = this.initialValue
+            } else{
+                
+                this.currentValue = futureValue
+            }
             // Emit the value to parent
             this.$emit('update:modelValue', this.currentValue)
         }
@@ -71,6 +92,7 @@ export default {
 
 .title {
     font-size: 1.2rem;
+    min-width: 4ch;
     margin-right: 2ch;
 }
 
@@ -86,7 +108,7 @@ input,
 
 input {
     border-right: 0;
-    width: 20ch;
+    width: v-bind('width');
     color: #666;
     border-radius: 7px 0px 0px 7px;
 }

@@ -12,4 +12,4 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
-router.push({name: "Empty"})
+router.push({ name: 'Empty' })
