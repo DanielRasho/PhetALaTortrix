@@ -5,7 +5,6 @@ import { useRouter, RouterView } from 'vue-router'
 import { ref } from 'vue'
 
 const router = useRouter()
-const BASE = "/PhetALaTortrix"
 const figures = ref([
     {
         name: 'Cone',

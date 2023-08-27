@@ -15,4 +15,11 @@ const props = defineProps({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+h3 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1ch;
+
+}
+</style>

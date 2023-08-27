@@ -23,7 +23,7 @@ import fieldSection from '@/components/molecules/fieldSection.vue'
 <style scoped>
 .params-box {
     width: 100%;
-    min-height: 25vh;
+    min-height: 30vh;
     display: flex;
     justify-content: space-around;
 }
