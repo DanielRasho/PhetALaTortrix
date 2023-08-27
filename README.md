@@ -1,6 +1,15 @@
-# Phet A La Tortrix
+<h1 align="center">
+    <img src="./phetLogo.png" width="200px">
+    <h1 align="center" style="font-style:italic;">Phet A La Tortrix</h1>
+    <h5 align="center">
+    <i style="color:grey;"> A Electric field simulator app</i>
+    </h5>
 
-A Electric simulator app written in rust and Vuejs.
+</h1>
+
+Made with [VueJS](https://vuejs.org/) and [Rust](https://www.rust-lang.org/)
+
+🔴 **Live View:** [***Here***](https://danielrasho.github.io/PhetALaTortrix/)
 
 ## Compiling the project
 
@@ -21,7 +30,7 @@ The first time you execute the command it may take a while because it needs to i
 Run the following command to compile the backend:
 
 ```bash
-cd chess_engine
+cd backend
 wasm-pack build --target web
 ```
 
