@@ -1,20 +1,20 @@
 <template>
     <div class="field-container">
-        <span class="title">{{ this.name }}</span>
+        <span class="title">{{ props.name }}</span>
         <input
             @blur="updateValue"
             type="text"
-            :placeholder="this.placeholder"
+            :placeholder="props.placeholder"
             :value="currentValue"
         />
-        <span class="unit">{{ this.unit }}</span>
+        <span class="unit">{{ props.unit }}</span>
     </div>
 </template>
 
 <script setup>
 import { onMounted, ref } from 'vue';
 
-const currentValue = ref(null)
+const currentValue = ref("")
 
 const emit = defineEmits(['fieldUpdated'])
 
