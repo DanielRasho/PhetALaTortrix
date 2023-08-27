@@ -64,8 +64,7 @@ export default {
 </script>
 
 <style scoped>
-
-.field-container{
+.field-container {
     display: flex;
     align-items: center;
 }

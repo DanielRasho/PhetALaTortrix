@@ -6,17 +6,13 @@
 </template>
 
 <script setup>
-
 const props = defineProps({
-    title : {
+    title: {
         required: true,
         type: String,
-        default: "Title"
+        default: 'Title'
     }
 })
-
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
