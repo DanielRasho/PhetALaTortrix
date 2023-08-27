@@ -11,6 +11,11 @@ const router = createRouter({
             component: Empty
         },
         {
+            path: '/empty',
+            name: "Empty",
+            component: Empty
+        },
+        {
             path: BASE + '/cone',
             name: 'Cone',
             component: () => import('../views/Cone.vue')
