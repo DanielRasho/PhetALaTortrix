@@ -8,17 +8,17 @@ const router = useRouter()
 const figures = ref([
     {
         name: 'Cone',
-        img: 'circle.png',
+        img: 'cone.png',
         view: 'Cone'
     },
     {
         name: 'Truncated Cone',
-        img: 'circle.png',
+        img: 'trunk.png',
         view: 'ConeTrunk'
     },
     {
         name: 'Hemisphere',
-        img: 'circle.png',
+        img: 'hemisphere.png',
         view: 'Hemisphere'
     }
 ])
@@ -81,11 +81,13 @@ function changeFormView(viewPath) {
 
 .figures-btn-content {
     max-width: 9rem;
+    min-height: 7rem;
     margin: 0 1ch;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     border-radius: 1rem;
     background-color: var(--primary-button);
 }
