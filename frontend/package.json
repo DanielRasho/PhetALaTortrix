@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "pinia": "^2.1.6",
-    "tphet": "file:../backend/pkg/package.json",
+    "tphet": "file:../backend/pkg/",
     "two.js": "^0.8.11",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
