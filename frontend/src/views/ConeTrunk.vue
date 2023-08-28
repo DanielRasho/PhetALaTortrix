@@ -10,7 +10,6 @@
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
-import { trunk } from '@/lib/figuresDefaults'
 import { ref } from 'vue';
 
 const fields = ref({
