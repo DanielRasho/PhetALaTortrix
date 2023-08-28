@@ -20,25 +20,6 @@
                     @field-updated="fields.axis.x.max = $event"
                 />
             </div>
-            <h4>Y axis</h4>
-            <div class="wrapper-container">
-                <numberField
-                    name="Min"
-                    placeholder="- - -"
-                    unit="m"
-                    width="7ch"
-                    :initialValue="props.fields.axis.y.min"
-                    @field-updated="fields.axis.y.min = $event"
-                />
-                <numberField
-                    name="Max"
-                    placeholder="- - -"
-                    unit="m"
-                    width="7ch"
-                    :initialValue="props.fields.axis.y.max"
-                    @field-updated="fields.axis.y.max = $event"
-                />
-            </div>
         </fieldSection>
 
         <fieldSection title="Figure" class="specific-box">
