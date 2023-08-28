@@ -43,7 +43,7 @@
 
         <fieldSection title="Figure" class="specific-box">
         <div class="wrapper-container">
-            <numberField v-for="field in props.fields.figure" :key="field.name"
+            <numberField v-for="field in fields.figure" :key="field.name"
             class="specific-field"
             :name="field.name"
             :unit="field.unit"
@@ -69,10 +69,6 @@
                 >
                     Submit <i class="fa-solid fa-arrow-right"></i>
                 </buttonImportant>
-                <buttonImportant class="clear-btn"
-                    @click="emit('clear')"
-                    >Clear <i class="fa-solid fa-trash"></i
-                ></buttonImportant>
             </div>
         </fieldSection>
     </div>
@@ -121,7 +117,7 @@ const props = defineProps({
             }    
 })
 
-const fields = reactive(JSON.parse(JSON.stringify(props.fields)))
+let fields = reactive(JSON.parse(JSON.stringify(props.fields)))
 const newPoint = ref(0)
 
 

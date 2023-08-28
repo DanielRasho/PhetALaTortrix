@@ -1,37 +1,53 @@
 <template>
     <main>
         <div class="canvas"></div>
-        <fieldsContainer></fieldsContainer>
+        <fieldsContainer
+         :fields="fields"
+         @changesSubmited="updateFields($event)"
+        ></fieldsContainer>
     </main>
 </template>
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
-import Two from 'two.js';
-import { onMounted, ref } from 'vue'
-import { initializePlane } from "../lib/plane"
-import { HALF_PI } from 'two.js/src/utils/math';
+import { hemisphere } from '@/lib/figuresDefaults'
+import { ref } from 'vue';
 
 const fields = ref({
     axis: {
-        x: [-5, 25],
-        y: [-5, 25]
+        x: {
+            min: -5,
+            max: 5
+        },
+        y: {
+            min: -5,
+            max: 5
+        },
     },
     figure: {
         radius: {
-            value: 32,
+            value: 1,
             name: 'Radius',
             unit: 'm'
         },
-        Charge: {
-            value: 64,
+        charge: {
+            value: 1,
             name: 'Charge',
-            unit: "nC"
-        }
+            unit: 'nC'
+        },
     },
     points: []
-});
+})
 
+function updateFields(newValue) {
+    fields.value = newValue
+    console.log("FROM PARENT");
+    console.dir(fields.value);
+    drawCanvas()
+}
+function drawCanvas(){
+    // TODO
+}
 // /**
 //  * Draws the hemisphere into the screen.
 //  * @param {Two} drawer TwoJS object
@@ -87,17 +103,17 @@ const fields = ref({
 // })
 
 </script>
+
 <style scoped>
 main {
     grid-area: 'main';
-    flex-grow: 1;
     padding: 3ch;
 }
 .canvas {
     display: block;
-    background-color: white;
+    background-color: rgb(207, 207, 207);
     border-radius: 7px;
     min-height: 55vh;
-    margin-bottom: 3ch;
+    margin-bottom: 1ch;
 }
 </style>

@@ -4,13 +4,13 @@
         <fieldsContainer
          :fields="fields"
          @changesSubmited="updateFields($event)"
-         @clear="resetFields"
         ></fieldsContainer>
     </main>
 </template>
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
+import { cone } from '@/lib/figuresDefaults'
 import { ref } from 'vue';
 
 const fields = ref({
@@ -48,10 +48,10 @@ function updateFields(newValue) {
     fields.value = newValue
     console.log("FROM PARENT");
     console.dir(fields.value);
+    drawCanvas()
 }
-function resetFields(){
-    console.log("CLEAR");
-    
+function drawCanvas(){
+    // TODO
 }
 </script>
 
