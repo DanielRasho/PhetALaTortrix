@@ -1,12 +1,58 @@
 <template>
     <main>
         <div class="canvas"></div>
-        <fieldsContainer></fieldsContainer>
+        <fieldsContainer
+         :fields="fields"
+         @changesSubmited="updateFields($event)"
+         @clear="resetFields"
+        ></fieldsContainer>
     </main>
 </template>
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
+import { ref } from 'vue';
+
+const fields = ref({
+    axis: {
+        x: {
+            min: -5,
+            max: 5
+        },
+        y: {
+            min: -5,
+            max: 5
+        },
+    },
+    figure: {
+        radius: {
+            value: 1,
+            name: 'Radius',
+            unit: 'm'
+        },
+        heigh: {
+            value: 1,
+            name: 'Height',
+            unit: 'm'
+        },
+        charge: {
+            value: 1,
+            name: 'Charge',
+            unit: 'nC'
+        },
+    },
+    points: []
+})
+
+function updateFields(newValue) {
+    fields.value = newValue
+    console.log("FROM PARENT");
+    console.dir(fields.value);
+}
+function resetFields(){
+    console.log("CLEAR");
+    
+}
 </script>
 
 <style scoped>

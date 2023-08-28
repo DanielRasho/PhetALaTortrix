@@ -8,16 +8,16 @@
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.x[0]"
-                    @field-updated="fields.axis.x[0] = $event"
+                    :initialValue="props.fields.axis.x.min"
+                    @field-updated="fields.axis.x.min = $event"
                 />
                 <numberField
                     name="Max"
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.x[1]"
-                    @field-updated="fields.axis.x[1] = $event"
+                    :initialValue="props.fields.axis.x.max"
+                    @field-updated="fields.axis.x.max = $event"
                 />
             </div>
             <h4>Y axis</h4>
@@ -27,27 +27,27 @@
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.y[0]"
-                    @field-updated="fields.axis.y[0] = $event"
+                    :initialValue="props.fields.axis.y.min"
+                    @field-updated="fields.axis.y.min = $event"
                 />
                 <numberField
                     name="Max"
                     placeholder="- - -"
                     unit="m"
                     width="7ch"
-                    :initialValue="fields.axis.y[1]"
-                    @field-updated="fields.axis.y[1] = $event"
+                    :initialValue="props.fields.axis.y.max"
+                    @field-updated="fields.axis.y.max = $event"
                 />
             </div>
         </fieldSection>
 
         <fieldSection title="Figure" class="specific-box">
         <div class="wrapper-container">
-            <numberField v-for="field in fields.figure" :key="field.name"
+            <numberField v-for="field in props.fields.figure" :key="field.name"
             class="specific-field"
             :name="field.name"
             :unit="field.unit"
-            :titleWidth="calculateFieldNameWidth(fields)"
+            :titleWidth="calculateFieldNameWidth(props.fields)"
             :initialValue="field.value"
             @field-updated="field.value = $event"
             />
@@ -59,15 +59,18 @@
                 name="Position"
                 unit="m"
                 width="10ch"
+                :initialValue="props.fields.points.length"
+                @field-updated="newPoint = $event"
             />
             <div class="wrapper-container-center">
                 <buttonImportant
                     class="submit-btn"
-                    @click="console.log(fields)"
+                    @click="submitPoint"
                 >
                     Submit <i class="fa-solid fa-arrow-right"></i>
                 </buttonImportant>
                 <buttonImportant class="clear-btn"
+                    @click="emit('clear')"
                     >Clear <i class="fa-solid fa-trash"></i
                 ></buttonImportant>
             </div>
@@ -79,41 +82,67 @@
 import buttonImportant from '@/components/atoms/buttonImportant.vue'
 import numberField from '@/components/atoms/numberField.vue'
 import fieldSection from '@/components/molecules/fieldSection.vue'
-import { onMounted,  ref } from 'vue'
+import { reactive, ref, watch , toRaw} from 'vue'
 
-const fields = ref({
-    axis: {
-        x: [-5, 5],
-        y: [-5, 5]
-    },
-    figure: {
-        radius: {
-            value: 1,
-            name: 'Radius',
-            unit: 'm'
-        },
-        heigh: {
-            value: 1,
-            name: 'Height',
-            unit: 'm'
-        },
-        charge: {
-            value: 1,
-            name: 'Charge',
-            unit: 'nC'
-        },
-    },
-    points: []
+const emit = defineEmits(['changesSubmited', 'clear'])
+const props = defineProps({
+    fields: {
+        required: true,
+        default: {
+            axis: {
+                x: {
+                    min: -5,
+                    max: 5
+                },
+                y: {
+                    min: -5,
+                    max: 5
+                },
+            },
+            figure: {
+                radius: {
+                    value: 1,
+                    name: 'Radius',
+                    unit: 'm'
+                },
+                heigh: {
+                    value: 1,
+                    name: 'Height',
+                    unit: 'm'
+                },
+                charge: {
+                    value: 1,
+                    name: 'Charge',
+                    unit: 'nC'
+                },
+            },
+            points: []
+                } 
+            }    
 })
+
+const fields = reactive(JSON.parse(JSON.stringify(props.fields)))
+const newPoint = ref(0)
+
 
 function calculateFieldNameWidth(names){
     let maxLen = 0;
-    for (let [key, proxy] of Object.entries(names.figure)) {
+    for (let proxy of Object.values(names.figure)) {
         let proxyLen = proxy.name.length
         if(proxyLen > maxLen)
             maxLen = proxyLen
     }
     return maxLen + 'ch';
+}
+
+// Emits hotReload signal when a value from the fields mutate.
+watch( fields, (newFields) => {
+    let newValue = toRaw(newFields)
+    emit("changesSubmited", newValue)
+})
+
+function submitPoint(){
+    fields.points.push(newPoint.value)
 }
 
 </script>
