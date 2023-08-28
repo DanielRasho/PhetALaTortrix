@@ -10,7 +10,6 @@
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
-import { hemisphere } from '@/lib/figuresDefaults'
 import { ref } from 'vue';
 
 const fields = ref({
