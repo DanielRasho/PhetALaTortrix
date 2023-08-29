@@ -61,6 +61,7 @@ export const drawPoints = (
     let { max } = context.axis.x
     let originY = drawer.height / 2
     let fig = figureFromContext(context)
+    console.log("The figure is: ", fig);
 
     let vectors = context.points.map((point) => [
         point,
@@ -69,15 +70,16 @@ export const drawPoints = (
             originY
         )
     ])
-    console.log('Points drawed')
     vectors.forEach(([, v]) => {
         let c = drawer.makeCircle(v.x, v.y, 4)
         c.fill = 'red'
     })
+    console.log('Points drawed')
 
     vectors.forEach(([originalPoint, v]) => {
         try {
             let field = fieldOn(fig, originalPoint, 250)
+            drawer.makeText(`R = ${field.toExponential(4)} N/C`, v.x, v.y-8);
             console.log(`The field of (${originalPoint}, 0) is ${field}`)
             let x = reducer(field)
             console.log(`The arrow length is: ${x}`)
