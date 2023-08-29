@@ -21,13 +21,11 @@ export function js_cone_trunk_field_on(figure: any, x: any, parts: any): any;
 /**
 * Calculates the field value at `x`.
 * `x` is assumed to be on the axis of symmetry of the hemisphere.
-* `parts` Represents the quantity of terms used in the Reinman sum to approximate the field.
 * @param {any} figure
 * @param {any} x
-* @param {any} parts
 * @returns {any}
 */
-export function js_hemisphere_field_on(figure: any, x: any, parts: any): any;
+export function js_hemisphere_field_on(figure: any, x: any): any;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -35,7 +33,7 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly js_cone_field_on: (a: number, b: number, c: number) => void;
   readonly js_cone_trunk_field_on: (a: number, b: number, c: number, d: number) => void;
-  readonly js_hemisphere_field_on: (a: number, b: number, c: number, d: number) => void;
+  readonly js_hemisphere_field_on: (a: number, b: number, c: number) => void;
   readonly __wbindgen_malloc: (a: number, b: number) => number;
   readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
