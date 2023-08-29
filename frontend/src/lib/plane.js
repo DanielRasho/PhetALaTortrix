@@ -1,3 +1,5 @@
+import Two from "two.js";
+
 /**
  * Draws a plane according to the given parameters.
  * @param {Two} two The renderer of the TwoJS
@@ -31,3 +33,42 @@ export const initializePlane = (two, columns = 25, rows = 11, guideLinesColor = 
     let xAxis = two.makeArrow(0, xAxisPos, two.width, xAxisPos, 12);
     xAxis.linewidth = 2;
 }
+
+const defaultReducer = (v) => v / Math.pow(10,8);
+
+/**
+ * Draws the hemisphere into the screen.
+ * @param {Two} drawer TwoJS object
+ * @param {Two.Vector} originPos The vector position of the origin 
+ * @param {Object} context object that contains all the fields that the user can change.
+ * @param {Function} figureFromContext The function to create the figure object from the context.
+ * @param {Function} fieldOn The function to calculate the field on the given point.
+ * @param {Function} reducer The function that reduces the field in order to graph it.
+ */
+export const drawPoints = (drawer, originPos, context, figureFromContext, fieldOn, reducer = defaultReducer) => {
+    let { max } = context.axis.x;
+    let originY = drawer.height / 2;
+    let fig = figureFromContext(context);
+
+    let vectors = context.points.map((point) => [point, new Two.Vector(point / max * (drawer.width - originPos.x) + originPos.x, originY)]);
+    console.log("Points drawed");
+    vectors.forEach(([, v]) => {
+        let c = drawer.makeCircle(v.x, v.y, 4);
+        c.fill = "red";
+    });
+
+    vectors.forEach(([originalPoint, v]) => {
+        try {
+            let field = fieldOn(fig, originalPoint, 250);
+            console.log(`The field of (${originalPoint}, 0) is ${field}`);
+            let x = reducer(field);
+            console.log(`The arrow length is: ${x}`);
+            let arrow = drawer.makeArrow(v.x, v.y, v.x + x, v.y);
+            arrow.stroke = "red";
+            arrow.linewidth = 5;
+        } catch (ex) {
+            console.log("Error creating arrows...");
+            console.error(ex);
+        }
+    });
+};
