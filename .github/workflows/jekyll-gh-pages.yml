@@ -38,9 +38,9 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v22
       - name: Install dependencies
-        run: nix-shell ../default.nix --run yarn install
+        run: nix-shell ../default.nix --run "yarn install"
       - name: Build WASM
-        run: nix-shell ../default.nix --run yarn wasm
+        run: nix-shell ../default.nix --run "yarn wasm"
       - name: Build
         run: yarn build
       - name: Setup Pages
