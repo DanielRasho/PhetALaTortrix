@@ -44,6 +44,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Build WASM
+        uses: michaelpeterswa/rust-wasm-pack-action@v1.0.0
         run: yarn wasm
       - name: Build
         run: yarn build
