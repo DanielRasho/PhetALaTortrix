@@ -26,17 +26,25 @@ const EPSILON_0: f64 = 8.854187817e-12;
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the cone.
-pub fn cone_field_on(cone: Cone, x: f64) -> f64 {
+pub fn cone_field_on(cone: Cone, d: f64) -> f64 {
     let Cone {
         radius,
         length,
         charge,
     } = cone;
-    let factor = 3.0 / 2.0;
+    let sqrt_h2_plus_r2 = (length.powi(2) + radius.powi(2)).sqrt();
 
-    factor * charge / (std::f64::consts::PI * EPSILON_0 * radius.powi(3))
-        * (length
-            - f64::ln(radius + f64::sqrt((x + length).powi(2) + radius.powi(2)) / (x + length)))
+    let integral = |x: f64| {
+        let factor = 3.0*charge / (2.0 * std::f64::consts::PI * length * EPSILON_0);
+        let parenthesis_fraction = length / sqrt_h2_plus_r2.powi(3);
+        let ln_first_term = length * sqrt_h2_plus_r2 * ((d-x).powi(2)+radius.powi(2)*x.powi(2)/length.powi(2)).sqrt();
+        let ln_second_term = d*length.powi(2)+length.powi(2)*x+radius.powi(2)*x;
+
+        factor * (x - parenthesis_fraction*(d*radius.powi(2)*(ln_first_term - ln_second_term).ln() - ln_first_term))
+    };
+
+    integral(0.0) - integral(length)
+
 }
 
 /// Calculates the field value at `x`.
