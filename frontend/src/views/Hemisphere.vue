@@ -135,6 +135,11 @@ const drawHemisphere = (drawer, originPos, context) => {
     )
 }
 
+const contextToFigure = (c) => ({
+    radius: c.figure.radius.value,
+    charge: c.figure.charge.value
+});
+
 function drawCanvas(context) {
     let rows = 11
     let columns = 25
@@ -150,10 +155,7 @@ function drawCanvas(context) {
         two,
         originPos,
         context,
-        (c) => ({
-            radius: c.figure.radius.value,
-            charge: c.figure.charge.value
-        }),
+        contextToFigure,
         js_hemisphere_field_on
     )
 

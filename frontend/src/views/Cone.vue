@@ -168,7 +168,6 @@ function drawCanvas(context) {
         context,
         contextToFigure,
         js_cone_field_on,
-        js_cone_field_on(contextToFigure(context), 1)
     )
 
     two.update()
