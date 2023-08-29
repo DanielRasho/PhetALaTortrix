@@ -57,7 +57,7 @@ const fields = ref({
         charge: {
             value: 1,
             name: 'Charge',
-            unit: 'nC'
+            unit: 'C'
         }
     },
     points: []
