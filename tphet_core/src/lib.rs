@@ -38,9 +38,9 @@ pub fn cone_field_on(cone: Cone, d: f64) -> f64 {
     let integral = |x: f64| {
         let parenthesis_fraction = length / sqrt_h2_plus_r2.powi(3);
         let ln_first_term = length * sqrt_h2_plus_r2 * ((d-x).powi(2)+radius.powi(2)*x.powi(2)/length.powi(2)).sqrt();
-        let ln_second_term = d*length.powi(2)+length.powi(2)*x+radius.powi(2)*x;
+        let ln_second_term = -d*length.powi(2)+length.powi(2)*x+radius.powi(2)*x;
 
-        x - parenthesis_fraction*(d*radius.powi(2)*(ln_first_term - ln_second_term).ln() - ln_first_term)
+        x - parenthesis_fraction*(d*radius.powi(2)*(ln_first_term + ln_second_term).ln() - ln_first_term)
     };
 
     factor * (integral(0.0) - integral(-length))
