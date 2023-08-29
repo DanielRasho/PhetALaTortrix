@@ -20,6 +20,7 @@ Made with <3 by
 
 🔴 **Known Bugs:** 
 - Crash when reloading the page.
+- Truncated Cone function isn't defined when both radius are equal
 
 ## Compiling the project
 
