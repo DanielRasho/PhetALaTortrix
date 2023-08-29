@@ -61,12 +61,14 @@ pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64, parts: i64) -> f64 {
             * (R2_2 + R2_1 + left_radius * right_radius));
 
     let dx = length / parts as f64;
-    let sum: f64 = (1..=parts).map(|i| {
-        let x_i = dx * i as f64;
-        let numerator = x + length - x_i;
-        let denominator_right = (deltaR)/length * x_i;
-        numerator / (numerator.powi(2)+ denominator_right.powi(2)).sqrt()
-    }).sum();
+    let sum: f64 = (1..=parts)
+        .map(|i| {
+            let x_i = dx * i as f64;
+            let numerator = x + length - x_i;
+            let denominator_right = (deltaR) / length * x_i;
+            numerator / (numerator.powi(2) + denominator_right.powi(2)).sqrt()
+        })
+        .sum();
 
     factor * (length - dx * sum)
 }
@@ -74,23 +76,17 @@ pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64, parts: i64) -> f64 {
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
 /// `parts` is the amount of precision the user desires to have over the value of the field.
-pub fn hemisphere_field_on(hemisphere: Hemisphere, x: f64, parts: i64) -> f64 {
+pub fn hemisphere_field_on(hemisphere: Hemisphere, x: f64) -> f64 {
     let Hemisphere { radius, charge } = hemisphere;
-    let factor = 3.0 * charge / (8.0 * std::f64::consts::PI * EPSILON_0);
-    let d_x = radius / parts as f64;
-    let R2 = radius.powi(2);
-    let d2 = x.powi(2);
+    let factor = 3.0 * charge / (4.0 * std::f64::consts::PI * radius.powi(3) * EPSILON_0);
+    let sqrt = (x.powi(2) + radius.powi(2)).sqrt();
+    let second_term = -2.0 * x.powi(2) + radius.powi(2);
+    let third_term = (x - radius) * (-2.0 * x.powi(2) + x * radius + radius.powi(2));
 
-    let sum: f64 = (1..=parts)
-        .map(|i| {
-            let x_i = radius / parts as f64 * i as f64;
-            let r3 = (R2 - x_i.powi(2)).powf(3.0 / 2.0);
-            let square_term = d2 / (d2 + R2 - x_i.powi(2)).powf(0.5);
-            d_x * (1.0 / r3) * (1.0 - square_term)
-        })
-        .sum();
+    let a = (sqrt * second_term - third_term);
+    println!("Inner value: {}", a);
 
-    sum * factor
+    factor * (radius - (sqrt * second_term - third_term) / (3.0 * x.powi(2)))
 }
 
 /// Calculates the field value at `x`.
@@ -108,7 +104,11 @@ pub fn js_cone_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, JsValue>
 /// `x` is assumed to be on the axis of symmetry of the cone trunk.
 /// `parts` Represents the quantity of terms used in the Reinman sum to approximate the field.
 #[wasm_bindgen]
-pub fn js_cone_trunk_field_on(figure: JsValue, x: JsValue, parts: JsValue) -> Result<JsValue, JsValue> {
+pub fn js_cone_trunk_field_on(
+    figure: JsValue,
+    x: JsValue,
+    parts: JsValue,
+) -> Result<JsValue, JsValue> {
     let trunk = serde_wasm_bindgen::from_value(figure)?;
     let x = serde_wasm_bindgen::from_value(x)?;
     let parts = serde_wasm_bindgen::from_value(parts)?;
@@ -119,18 +119,12 @@ pub fn js_cone_trunk_field_on(figure: JsValue, x: JsValue, parts: JsValue) -> Re
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
-/// `parts` Represents the quantity of terms used in the Reinman sum to approximate the field.
 #[wasm_bindgen]
-pub fn js_hemisphere_field_on(
-    figure: JsValue,
-    x: JsValue,
-    parts: JsValue,
-) -> Result<JsValue, JsValue> {
+pub fn js_hemisphere_field_on(figure: JsValue, x: JsValue) -> Result<JsValue, JsValue> {
     let hemisphere = serde_wasm_bindgen::from_value(figure)?;
     let x = serde_wasm_bindgen::from_value(x)?;
-    let parts = serde_wasm_bindgen::from_value(parts)?;
 
-    let field = hemisphere_field_on(hemisphere, x, parts);
+    let field = hemisphere_field_on(hemisphere, x);
     Ok(serde_wasm_bindgen::to_value(&field)?)
 }
 
@@ -171,7 +165,7 @@ mod tests {
 
         let point = 2.5;
 
-        let output = cone_trunk_field_on(cone, point);
+        let output = cone_trunk_field_on(cone, point, 500);
         let difference = (output - CORRECT_FIELD).abs();
         // Has at least 5 decimal points of precision...
         println!("Output: {}", output);
@@ -185,13 +179,13 @@ mod tests {
         //TODO Implement test
         const CORRECT_FIELD: f64 = 0.0;
         let hemisphere = Hemisphere {
-            radius: 0.5,
-            charge: 1.0,
+            radius: 1.0,
+            charge: 6e-7,
         };
 
         let point = 2.5;
 
-        let output = hemisphere_field_on(hemisphere, point, 500);
+        let output = hemisphere_field_on(hemisphere, point);
         let difference = (output - CORRECT_FIELD).abs();
         // Has at least 5 decimal points of precision...
         println!("Output: {}", output);
