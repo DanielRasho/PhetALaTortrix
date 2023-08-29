@@ -170,8 +170,6 @@ const contextToFigure = (c) => ({
 
 });
 
-const fieldCompressor = (v) => v/Math.pow(10,5); 
-
 function drawCanvas(context) {
     let rows = 11
     let columns = 25
@@ -182,8 +180,6 @@ function drawCanvas(context) {
         two.height / 2
     )
 
-    console.log("Drawing graph with: ", context);
-
     initializePlane(two, columns, rows)
     drawTrunkCone(two, originPos, rowGap, columnGap, context);
     drawPoints(
@@ -192,7 +188,7 @@ function drawCanvas(context) {
         context,
         contextToFigure,
         js_cone_trunk_field_on,
-        fieldCompressor,
+        (v)=>v/Math.pow(10, 5)
     )
 
     two.update()
