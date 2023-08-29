@@ -33,17 +33,17 @@ pub fn cone_field_on(cone: Cone, d: f64) -> f64 {
         charge,
     } = cone;
     let sqrt_h2_plus_r2 = (length.powi(2) + radius.powi(2)).sqrt();
+    let factor = 3.0*charge / (2.0 * std::f64::consts::PI * radius.powi(2) * length * EPSILON_0);
 
     let integral = |x: f64| {
-        let factor = 3.0*charge / (2.0 * std::f64::consts::PI * length * EPSILON_0);
         let parenthesis_fraction = length / sqrt_h2_plus_r2.powi(3);
         let ln_first_term = length * sqrt_h2_plus_r2 * ((d-x).powi(2)+radius.powi(2)*x.powi(2)/length.powi(2)).sqrt();
         let ln_second_term = d*length.powi(2)+length.powi(2)*x+radius.powi(2)*x;
 
-        factor * (x - parenthesis_fraction*(d*radius.powi(2)*(ln_first_term - ln_second_term).ln() - ln_first_term))
+        x - parenthesis_fraction*(d*radius.powi(2)*(ln_first_term - ln_second_term).ln() - ln_first_term)
     };
 
-    integral(0.0) - integral(length)
+    factor * (integral(0.0) - integral(-length))
 
 }
 
@@ -83,7 +83,6 @@ pub fn cone_trunk_field_on(cone_trunk: ConeTrunk, x: f64, parts: i64) -> f64 {
 
 /// Calculates the field value at `x`.
 /// `x` is assumed to be on the axis of symmetry of the hemisphere.
-/// `parts` is the amount of precision the user desires to have over the value of the field.
 pub fn hemisphere_field_on(hemisphere: Hemisphere, x: f64) -> f64 {
     let Hemisphere { radius, charge } = hemisphere;
     let factor = 3.0 * charge / (4.0 * std::f64::consts::PI * radius.powi(3) * EPSILON_0);
