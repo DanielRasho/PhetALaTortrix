@@ -23,16 +23,18 @@
         </fieldSection>
 
         <fieldSection title="Figure" class="specific-box">
-        <div class="wrapper-container">
-            <numberField v-for="field in fields.figure" :key="field.name"
-            class="specific-field"
-            :name="field.name"
-            :unit="field.unit"
-            :titleWidth="calculateFieldNameWidth(props.fields)"
-            :initialValue="field.value"
-            @field-updated="field.value = $event"
-            />
-        </div>
+            <div class="wrapper-container">
+                <numberField
+                    v-for="field in fields.figure"
+                    :key="field.name"
+                    class="specific-field"
+                    :name="field.name"
+                    :unit="field.unit"
+                    :titleWidth="calculateFieldNameWidth(props.fields)"
+                    :initialValue="field.value"
+                    @field-updated="field.value = $event"
+                />
+            </div>
         </fieldSection>
 
         <fieldSection title="Point" class="submit-box">
@@ -44,10 +46,7 @@
                 @field-updated="newPoint = $event"
             />
             <div class="wrapper-container-center">
-                <buttonImportant
-                    class="submit-btn"
-                    @click="submitPoint"
-                >
+                <buttonImportant class="submit-btn" @click="submitPoint">
                     Submit <i class="fa-solid fa-arrow-right"></i>
                 </buttonImportant>
             </div>
@@ -59,7 +58,7 @@
 import buttonImportant from '@/components/atoms/buttonImportant.vue'
 import numberField from '@/components/atoms/numberField.vue'
 import fieldSection from '@/components/molecules/fieldSection.vue'
-import { reactive, ref, watch , toRaw} from 'vue'
+import { reactive, ref, watch, toRaw } from 'vue'
 
 const emit = defineEmits(['changesSubmited', 'clear'])
 const props = defineProps({
@@ -87,37 +86,34 @@ const props = defineProps({
                     value: 1,
                     name: 'Charge',
                     unit: 'nC'
-                },
+                }
             },
             points: []
-                } 
-            }    
+        }
+    }
 })
 
 let fields = reactive(JSON.parse(JSON.stringify(props.fields)))
 const newPoint = ref(0)
 
-
-function calculateFieldNameWidth(names){
-    let maxLen = 0;
+function calculateFieldNameWidth(names) {
+    let maxLen = 0
     for (let proxy of Object.values(names.figure)) {
         let proxyLen = proxy.name.length
-        if(proxyLen > maxLen)
-            maxLen = proxyLen
+        if (proxyLen > maxLen) maxLen = proxyLen
     }
-    return maxLen + 'ch';
+    return maxLen + 'ch'
 }
 
 // Emits hotReload signal when a value from the fields mutate.
-watch( fields, (newFields) => {
+watch(fields, (newFields) => {
     let newValue = toRaw(newFields)
-    emit("changesSubmited", newValue)
+    emit('changesSubmited', newValue)
 })
 
-function submitPoint(){
+function submitPoint() {
     fields.points.push(newPoint.value)
 }
-
 </script>
 
 <style scoped>
@@ -148,7 +144,7 @@ h4 {
     padding-left: 2ch;
 }
 
-.specific-field{
+.specific-field {
     margin-top: 2ch;
 }
 .wrapper-container {
@@ -156,7 +152,6 @@ h4 {
     flex-wrap: wrap;
     justify-content: space-between;
 }
-
 
 .wrapper-container-center {
     display: flex;

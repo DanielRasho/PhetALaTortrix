@@ -12,67 +12,70 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue'
 
-const currentValue = ref("")
+const currentValue = ref('')
 
 const emit = defineEmits(['fieldUpdated'])
 
 const props = defineProps({
-        /**
-         * Required for v-model behaviour.
-         */
-        name: {
-            required: true,
-            type: String,
-            default: 'Title'
-        },
+    /**
+     * Required for v-model behaviour.
+     */
+    name: {
+        required: true,
+        type: String,
+        default: 'Title'
+    },
 
-        initialValue: {
-            required: true,
-        },
+    initialValue: {
+        required: true
+    },
 
-        unit: {
-            required: true,
-            type: String,
-            default: '?'
-        },
-        /**
-         * Renders the placeholder value for some input types.
-         */
-        placeholder: {
-            required: false,
-            type: String,
-            default: '- - -'
-        },
-        width: {
-            required: false,
-            type: String,
-            default: '20ch'
-        },
-        titleWidth: {
-            required: false,
-            type: String,
-            default: 'auto'
-        }
+    unit: {
+        required: true,
+        type: String,
+        default: '?'
+    },
+    /**
+     * Renders the placeholder value for some input types.
+     */
+    placeholder: {
+        required: false,
+        type: String,
+        default: '- - -'
+    },
+    width: {
+        required: false,
+        type: String,
+        default: '20ch'
+    },
+    titleWidth: {
+        required: false,
+        type: String,
+        default: 'auto'
+    }
 })
 
 onMounted(() => {
     currentValue.value = props.initialValue
 })
 
-function updateValue(event){
-    let futureValue = event.target.value;
-    if(futureValue == '' || futureValue == '-' || isNaN(parseFloat(futureValue))){
+function updateValue(event) {
+    let futureValue = event.target.value
+    if (
+        futureValue == '' ||
+        futureValue == '-' ||
+        isNaN(parseFloat(futureValue))
+    ) {
         // Force value update
-        currentValue.value = parseFloat(currentValue.value + 1);
-        currentValue.value = parseFloat(currentValue.value - 1) ;
-    }else{
+        currentValue.value = parseFloat(currentValue.value + 1)
+        currentValue.value = parseFloat(currentValue.value - 1)
+    } else {
         currentValue.value = parseFloat(futureValue)
-        emit("fieldUpdated", currentValue.value)
+        emit('fieldUpdated', currentValue.value)
     }
 }
-
 </script>
 
 <style scoped>

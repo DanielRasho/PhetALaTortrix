@@ -2,15 +2,15 @@
     <main>
         <div class="canvas"></div>
         <fieldsContainer
-         :fields="fields"
-         @changesSubmited="updateFields($event)"
+            :fields="fields"
+            @changesSubmited="updateFields($event)"
         ></fieldsContainer>
     </main>
 </template>
 
 <script setup>
 import fieldsContainer from '@/components/organism/fieldsContainer.vue'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 const fields = ref({
     axis: {
@@ -21,7 +21,7 @@ const fields = ref({
         y: {
             min: -5,
             max: 5
-        },
+        }
     },
     figure: {
         majorRadius: {
@@ -43,19 +43,18 @@ const fields = ref({
             value: 1,
             name: 'Charge',
             unit: 'nC'
-        },
+        }
     },
     points: []
 })
 
-
 function updateFields(newValue) {
     fields.value = newValue
-    console.log("FROM PARENT");
-    console.dir(fields.value);
+    console.log('FROM PARENT')
+    console.dir(fields.value)
     drawCanvas()
 }
-function drawCanvas(){
+function drawCanvas() {
     // TODO
 }
 </script>
