@@ -10,6 +10,12 @@
 Made with [VueJS](https://vuejs.org/) and [Rust](https://www.rust-lang.org/)
 
 🔴 **Live View:** [***Here***](https://danielrasho.github.io/PhetALaTortrix/)
+🔴 **Video on How to use it:** [***Here***](https://youtu.be/64KSUpqmCec)
+
+Made with <3 by
+
+- Flavio Galan
+- Daniel Rayo
 
 🔴 **Known Bugs:** 
 - Crash when reloading the page.
