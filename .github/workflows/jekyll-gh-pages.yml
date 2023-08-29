@@ -43,6 +43,8 @@ jobs:
           cache-dependency-path: ./frontend/yarn.lock
       - name: Install dependencies
         run: yarn install
+      - name: wasm-pack-action
+        uses: jetli/wasm-pack-action@v0.4.0
       - name: Build WASM
         uses: michaelpeterswa/rust-wasm-pack-action@v1.0.0
         run: yarn wasm
